@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Firham Assureur Conseils</title>
+    <link rel="style CSS" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #4CAF50; /* Couleur verte */
+        }
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background-color: #fff; /* Couleur de fond blanc */
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group input {
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+            font-size: 16px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Connexion - Firham Assureur Conseils</h2>
+    <form id="loginForm" action="authentification.php" method="post">
+        <div class="input-group">
+            <input type="text" id="username" name="username" placeholder="Votre nom d'utilisateur" required>
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" name="password" placeholder="Votre mot de passe" required>
+        </div>
+        <button type="button" class="btn" onclick="validateAndSubmit()">Se connecter</button>
+    </form>
+</div>
+
+<script>
+    function validateAndSubmit() {
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+
+        if (username.trim() === '' || password.trim() === '') {
+            alert('Veuillez remplir tous les champs.');
+        } else {
+            document.getElementById('loginForm').action = 'BaseFIRHAM.html';
+            document.getElementById('loginForm').submit();
+        }
+    }
+</script>
+
+</body>
+</html>

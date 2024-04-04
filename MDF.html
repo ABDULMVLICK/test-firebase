@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modification de l'enregistrement - Firham Assureur Conseils</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Couleur de fond */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff; /* Couleur de fond du conteneur */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+            text-align: center;
+        }
+        h2 {
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .input-group label {
+            width: 150px;
+            text-align: right;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+        .input-group select,
+        .input-group input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        .input-group select:focus,
+        .input-group input:focus {
+            border-color: #4CAF50;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .confirm-button, .cancel-button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-transform: uppercase;
+            margin: 0 10px;
+        }
+        .confirm-button {
+            background-color: #27ae60;
+            color: white;
+        }
+        .confirm-button:hover {
+            background-color: #218c53;
+        }
+        .cancel-button {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .cancel-button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Modification de l'enregistrement - Firham Assureur Conseils</h2>
+    <form action="COF2.html" method="post">
+        <div class="input-group">
+            <label for="identifiant">N° Identifiant</label>
+            <input type="text" name="identifiant" id="identifiant" placeholder="FR..." oninput="this.value = 'FR' + this.value.replace(/\D/g,'')" required>
+        </div>
+        <div class="input-group">
+            <label for="nom_prenom">Nom et Prénoms</label>
+            <input type="text" name="nom_prenom" placeholder="Nom et Prénoms" required>
+        </div>
+        <div class="input-group">
+            <label for="telephone">Téléphone</label>
+            <select name="countryCode" id="countryCode" style="width: calc(100% - 20px);">
+                <option value="+1">USA (+1)</option>
+                <option value="+33">France (+33)</option>
+                <option value="+49">Germany (+49)</option>
+                <option value="+229" selected>Bénin (+229)</option>
+            </select>
+            <input type="text" name="telephone" id="telephone" placeholder="Numéro de téléphone" oninput="this.value = this.value.replace(/\D/g,'')" required style="margin-left: 20px; width: calc(100% - 170px);">
+        </div>
+        <div class="input-group">
+            <label for="assurance">Type d'assurance</label>
+            <select name="assurance" id="assurance" required>
+                <option value="" disabled selected hidden>Sélectionner un type d'assurance</option>
+                <option value="Assurance Auto">Assurance Auto</option>
+                <option value="Assurance Habitation">Assurance Habitation</option>
+                <option value="Assurance Vie">Assurance Vie</option>
+                <option value="Assurance Santé">Assurance Santé</option>
+                <option value="Assurance Voyage">Assurance Voyage</option>
+                <option value="Assurance Responsabilité Civile">Assurance Responsabilité Civile</option>
+                <!-- Ajoutez d'autres options si nécessaire -->
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="numero_police">Numéro de police</label>
+            <input type="text" name="numero_police" id="numero_police" placeholder="FIRH-123456-78" pattern="FIRH-\d{6}-\d{2}" title="Le format doit être FIRH-123456-78" required>
+        </div>
+        <!-- Nouveaux champs -->
+        <div class="input-group">
+            <label for="compagnie">Compagnie</label>
+            <select id="compagnie" name="compagnie" required>
+                <option value="" disabled selected hidden>Sélectionner une compagnie</option>
+                <option value="NSIA ASSURANCES">NSIA ASSURANCES</option>
+                <option value="SUNU ASSURANCES">SUNU ASSURANCES</option>
+                <option value="NOBILA ASSURANCES">NOBILA ASSURANCES</option>
+                <option value="AFRICAINE DES ASSURANCES">AFRICAINE DES ASSURANCES</option>
+                <option value="ATLANTIQUE ASSURANCES">ATLANTIQUE ASSURANCES</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="numero_matricule">Numéro matricule</label>
+            <input type="text" id="numero_matricule" name="numero_matricule" placeholder="Numéro matricule" required>
+        </div>
+        <div class="input-group">
+            <label for="prime_totale">Prime totale</label>
+            <input type="text" id="prime_totale" name="prime_totale" placeholder="Prime totale (Montant FCFA)" oninput="formatMontant(this)" required>
+        </div>
+        <div class="input-group">
+            <label for="date_effet">Date d'effet</label>
+            <input type="text" id="date_effet" name="date_effet" placeholder="Date d'effet (jj/mm/aaaa)" pattern="\d{2}/\d{2}/\d{4}" oninput="formatDate(this)" required>
+        </div>
+        <div class="input-group">
+            <label for="date_saisie">Date de saisie</label>
+            <input type="text" id="date_saisie" name="date_saisie" placeholder="Date de saisie (jj/mm/aaaa)" pattern="\d{2}/\d{2}/\d{4}" oninput="formatDate(this)" required>
+        </div>
+        <div class="input-group">
+            <label for="date_expiration">Date d'expiration</label>
+            <input type="text" id="date_expiration" name="date_expiration" placeholder="Date d'expiration (jj/mm/aaaa)" pattern="\d{2}/\d{2}/\d{4}" oninput="formatDate(this)" required>
+        </div>
+        <!-- Fin des nouveaux champs -->
+        <div class="button-group">
+            <button type="submit" class="confirm-button">Confirmer la modification</button>
+            <button type="button" class="cancel-button" onclick="window.location.href='BaseFIRHAM.html'">Annuler</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // JavaScript pour le formatage du montant
+    function formatMontant(input) {
+        // Supprimer tout sauf les chiffres
+        input.value = input.value.replace(/[^\d]/g, '');
+        // Ajouter l'espace des milliers
+        input.value = input.value.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        // Ajouter ' FCFA' à la fin
+        input.value += " FCFA";
+    }
+
+    // JavaScript pour le formatage de la date
+    function formatDate(input) {
+        const trimmedValue = input.value.replace(/\//g, ''); // Supprimer tous les "/"
+        const formattedValue = trimmedValue.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3'); // Insérer les "/"
+        input.value = formattedValue;
+    }
+</script>
+
+</body>
+</html>

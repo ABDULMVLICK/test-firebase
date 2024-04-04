@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation d'ajout - Firham Assureur Conseils</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h2 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input[type="text"], select, input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        #numero_police, #compagnie {
+            width: calc(100% - 22px);
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .error {
+            border-color: #f44336; /* Rouge */
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        .confirm-button {
+            background-color: #4CAF50;
+        }
+        .confirm-button:hover {
+            background-color: #45a049;
+        }
+        .cancel-button {
+            background-color: #f44336;
+        }
+        .cancel-button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Confirmation d'ajout - Firham Assureur Conseils</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Compagnie</th>
+                <th>Numéro matricule</th>
+                <th>Prime totale</th>
+                <th>Date d'effet</th>
+                <th>Date de saisie</th>
+                <th>Date d'expiration</th>
+                <th>Numéro de police</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <select id="compagnie" required>
+                        <option value="" disabled selected hidden>Sélectionner une compagnie</option>
+                        <option value="NSIA ASSURANCES">NSIA ASSURANCES</option>
+                        <option value="SUNU ASSURANCES">SUNU ASSURANCES</option>
+                        <option value="NOBILA ASSURANCES">NOBILA ASSURANCES</option>
+                        <option value="AFRICAINE DES ASSURANCES">AFRICAINE DES ASSURANCES</option>
+                        <option value="ATLANTIQUE ASSURANCES">ATLANTIQUE ASSURANCES</option>
+                    </select>
+                </td>
+                <td><input type="text" id="numero_matricule" placeholder="Numéro matricule" required></td>
+                <td><input type="text" id="prime_totale" placeholder="Prime totale (Montant FCFA)" oninput="formatMontant(this)" required></td>
+                <td><input type="text" id="date_effet" placeholder="Date d'effet (jj/mm/aaaa)" pattern="\d{2}/\d{2}/\d{4}" oninput="formatDate(this)" required></td>
+                <td><input type="text" id="date_saisie" placeholder="Date de saisie (jj/mm/aaaa)" pattern="\d{2}/\d{2}/\d{4}" oninput="formatDate(this)" required></td>
+                <td><input type="text" id="date_expiration" placeholder="Date d'expiration (jj/mm/aaaa)" pattern="\d{2}/\d{2}/\d{4}" oninput="formatDate(this)" required></td>
+                <td><input type="text" id="numero_police" placeholder="Numéro de police" required></td> <!-- Champ "Numéro de police" -->
+            </tr>
+        </tbody>
+    </table>
+    <button class="button confirm-button" onclick="validateForm()">Confirmer l'ajout</button>
+    <button class="button cancel-button" onclick="cancelAdd()">Annuler</button>
+</div>
+
+<script>
+    function validateForm() {
+        let isValid = true;
+        const compagnie = document.getElementById('compagnie');
+        const numeroMatricule = document.getElementById('numero_matricule');
+        const primeTotale = document.getElementById('prime_totale');
+        const dateEffet = document.getElementById('date_effet');
+        const dateSaisie = document.getElementById('date_saisie');
+        const dateExpiration = document.getElementById('date_expiration');
+        const numeroPolice = document.getElementById('numero_police');
+        const inputs = [compagnie, numeroMatricule, primeTotale, dateEffet, dateSaisie, dateExpiration, numeroPolice];
+        
+        // Enlever l'erreur précédente
+        inputs.forEach(input => {
+            input.classList.remove('error');
+        });
+
+        // Vérifier si la compagnie est sélectionnée
+        if(compagnie.value === "") {
+            compagnie.classList.add('error');
+            isValid = false;
+        }
+        
+        // Vérifier les autres champs (simplification de l'exemple, ajoutez vos propres validations ici)
+        inputs.slice(1).forEach(input => {
+            if(input.value.trim() === "") {
+                input.classList.add('error');
+                isValid = false;
+            }
+        });
+
+        if(isValid) {
+            // Si tout est valide, redirigez ou effectuez une action ici
+            window.location.href = 'COF1.html'; // Assurez-vous que le chemin est correct
+        } else {
+            // Afficher un message d'erreur ou gérer les erreurs ici
+            alert("Veuillez remplir tous les champs correctement.");
+        }
+    }
+
+    function cancelAdd() {
+        window.location.href = 'BaseFIRHAM.html'; // Assurez-vous que le chemin est correct
+    }
+    
+    // Gérer l'entrée numérique pour le champ prime totale et empêcher l'entrée de lettres
+    function formatMontant(input) {
+        // Supprimer tout sauf les chiffres
+        input.value = input.value.replace(/[^\d]/g, '');
+        // Ajouter l'espace des milliers
+        input.value = input.value.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        // Ajouter ' FCFA' à la fin
+        input.value += " FCFA";
+    }
+
+    // Gérer le formatage de la date (ajouter automatiquement les "/")
+    function formatDate(input) {
+        const trimmedValue = input.value.replace(/\//g, ''); // Supprimer tous les "/"
+        const formattedValue = trimmedValue.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3'); // Insérer les "/"
+        input.value = formattedValue;
+    }
+</script>
+
+</body>
+</html>

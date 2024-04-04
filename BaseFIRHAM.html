@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base de données - Firham Assureur Conseils</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Couleur de fond */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1000px; /* Augmentation de la largeur */
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff; /* Couleur de fond du conteneur */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+            text-align: center;
+        }
+        h2 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            width: 25%; /* Ajustement de la largeur des champs */
+        }
+        th {
+            background-color: #f2f2f2; /* Couleur de fond de l'en-tête */
+        }
+        input[type="text"], select {
+            width: calc(100% - 22px); /* Largeur des champs de saisie */
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .add-button, .modify-button, .delete-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-transform: uppercase;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        .add-button {
+            background-color: #4CAF50; /* Couleur du bouton Ajouter */
+            color: white;
+        }
+        .add-button:hover {
+            background-color: #45a049; /* Couleur au survol */
+        }
+        .modify-button {
+            background-color: #3498db; /* Couleur du bouton Modifier */
+            color: white;
+        }
+        .modify-button:hover {
+            background-color: #2980b9; /* Couleur au survol */
+        }
+        .delete-button {
+            background-color: #e74c3c; /* Couleur du bouton Supprimer */
+            color: white;
+        }
+        .delete-button:hover {
+            background-color: #c0392b; /* Couleur au survol */
+        }
+        /* Style pour la fenêtre modale */
+        .modal {
+            display: none; /* Par défaut, la fenêtre modale est cachée */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4); /* Fond semi-transparent */
+            overflow: auto;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            animation-name: modalopen;
+            animation-duration: 0.4s;
+        }
+        @keyframes modalopen {
+            from {opacity: 0}
+            to {opacity: 1}
+        }
+        .confirm-button, .cancel-button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .confirm-button {
+            background-color: #27ae60;
+            color: white;
+            margin-right: 10px;
+        }
+        .confirm-button:hover {
+            background-color: #218c53;
+        }
+        .cancel-button {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .cancel-button:hover {
+            background-color: #c0392b;
+        }
+        /* Style pour les messages d'erreur */
+        .error-message {
+            color: #e74c3c;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+    </style>
+    <script src="bdd.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Base de données - Firham Assureur Conseils</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>N° Identifiant</th>
+                <th>Nom et Prénoms</th>
+                <th>Téléphone</th> <!-- Champ restauré -->
+                <th>Types d'assurance</th> <!-- Changement de l'en-tête -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" id="identifiant" placeholder="FR01" required></td>
+                <td><input type="text" id="nom_prenom" placeholder="Nom et Prénoms" required></td>
+                <td>
+                    <div class="phone-dropdown"> <!-- Ajout de la classe phone-dropdown -->
+                        <input type="text" id="numero_telephone" placeholder="Numéro de téléphone" required>
+                    </div>
+                </td>
+                <td>
+                    <div  id="contrat" class="contract-dropdown">
+                        <select  required>
+                            <option value="" disabled selected hidden>Sélectionner un type de contrat</option>
+                            <option value="Assurance Auto">Assurance Auto</option>
+                            <option value="Assurance Vie">Assurance Vie</option>
+                            <option value="Assurance Famille">Assurance Famille</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <!-- Ajoutez plus de lignes ici si nécessaire -->
+        </tbody>
+    </table>
+    <!-- Bouton Ajouter à la base -->
+    <button class="add-button" id="ajout" >Ajouter à la base</button>
+    <!-- Bouton Modifier -->
+    <button class="modify-button" onclick="window.location.href='MDF.html'">Modifier</button>
+    <!-- Bouton Supprimer -->
+    <button class="delete-button" onclick="validateAndDisplayDeleteModal()">Supprimer</button>
+</div>
+
+<!-- Fenêtre modale pour l'ajout -->
+<div id="addModal" class="modal">
+    <div class="modal-content">
+        <p>Confirmez-vous l'ajout de ce client à la base de données ?</p>
+        <button class="confirm-button" onclick="window.location.href='AJT.html'">Confirmer</button>
+        <button class="cancel-button" onclick="closeModal('addModal')">Annuler</button>
+    </div>
+</div>
+
+<!-- Fenêtre modale pour la suppression -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <p>Confirmez-vous la suppression de ce client de la base de données ?</p>
+        <button class="confirm-button" onclick="window.location.href='COF3.html'">Confirmer</button>
+        <button class="cancel-button" onclick="closeModal('deleteModal')">Annuler</button>
+    </div>
+</div>
+
+<!-- <script>
+    // Animation pour afficher la fenêtre modale d'ajout
+    function displayAddModal() {
+        var modal = document.getElementById('addModal');
+        modal.style.display = 'block';
+    }
+
+    // Animation pour afficher la fenêtre modale de suppression
+    function displayDeleteModal() {
+        var modal = document.getElementById('deleteModal');
+        modal.style.display = 'block';
+    }
+
+    // Fermer la fenêtre modale lors du clic sur le bouton Annuler
+    function closeModal(modalId) {
+        var modal = document.getElementById(modalId);
+        modal.style.display = 'none';
+    }
+
+    // Validation et affichage de la fenêtre modale d'ajout
+    
+
+    // Validation et affichage de la fenêtre modale de suppression
+    function validateAndDisplayDeleteModal() {
+        var identifiant = document.getElementById('identifiant').value;
+        var nomPrenom = document.getElementById('nom_prenom').value;
+        var numeroTelephone = document.getElementById('numero_telephone').value;
+        var contrat = document.getElementById('contrat').value;
+
+        if (identifiant === "" || nomPrenom === "" ||  numeroTelephone === "" || contrat === "") {
+            alert("Veuillez remplir tous les champs avant de procéder.");
+            return;
+        }
+
+        // Validation des formats
+        if (!identifiant.startsWith('FR')) {
+            alert("Veuillez entrer un format valide pour l'identifiant (FR01).");
+            return;
+        }
+
+        var modal = document.getElementById('deleteModal');
+        modal.style.display = 'block';
+    }
+
+    // Gestion de la saisie dans le champ de téléphone pour n'accepter que les chiffres
+    var telephoneInput = document.getElementById('numero_telephone');
+    telephoneInput.addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    // Gestion de la saisie dans le champ d'identifiant pour ajouter automatiquement "FR"
+    var identifiantInput = document.getElementById('identifiant');
+    identifiantInput.addEventListener('input', function() {
+        if (!this.value.startsWith('FR')) {
+            this.value = 'FR' + this.value.replace(/[^0-9]/g, '');
+        }
+    });
+</script> -->
+<script type="module" src="bdd.js"></script>
+
+</body>
+</html>
